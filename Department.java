@@ -23,7 +23,7 @@ public class Department {
         num_employee = mas_employee.length;
     }
 
-    public void add_employee(Employee employee){
+    public void addEmployee(Employee employee){
         for (int i = 0; i < mas_employee.length; i++) {
             if (mas_employee[i].equals("")) {
                 mas_employee[i] = employee;
@@ -38,7 +38,7 @@ public class Department {
         mas_employee = mas_employee_2;
     }
 
-    public boolean kick_employee(String name, String surname){
+    public boolean kickEmployee(String name, String surname){
         int count = -1;
         for (int i = 0; i < mas_employee.length; i++) {
             if (mas_employee[i].getName().equals(name) && mas_employee[i].getSurname().equals(surname)) {
