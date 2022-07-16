@@ -7,8 +7,7 @@ public class Employee {
     int salary;
 
     public Employee(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
+        this(name, surname, "",0);
     }
 
     public Employee(String name, String surname, String post, int salary) {

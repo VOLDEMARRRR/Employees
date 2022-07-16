@@ -6,32 +6,28 @@ public class Department {
     int num_employee;
 
     public Department(String name_department){
-        this.name_department = name_department;
-        num_employee = 8;
-        mas_employee = new Employee[num_employee];
+        this(name_department,8);
     }
 
     public Department(String name_department, int number){
-        this.name_department = name_department;
-        num_employee = number;
-        mas_employee = new Employee[number];
+        this(name_department, new Employee[number]);
     }
 
     public Department(String name_department, Employee[] mas_employee){
         this.name_department = name_department;
         this.mas_employee = mas_employee;
-        num_employee = mas_employee.length;
+        this.num_employee = mas_employee.length;
     }
 
-    public void addEmployee(Employee employee){
+    public void addEmployee(Employee employee){ // проверка employee на null
         for (int i = 0; i < mas_employee.length; i++) {
-            if (mas_employee[i].equals("")) {
+            if (mas_employee[i] == null) {
                 mas_employee[i] = employee;
                 return;
             }
         }
         Employee[] mas_employee_2 = new Employee[mas_employee.length * 2];
-        for (int i = 0; i < mas_employee.length; i++) {
+        for (int i = 0; i < mas_employee.length; i++) { // передалать array copy
             mas_employee_2[i] = mas_employee[i];
         }
         mas_employee_2[mas_employee.length] = employee;
@@ -42,7 +38,7 @@ public class Department {
         int count = -1;
         for (int i = 0; i < mas_employee.length; i++) {
             if (mas_employee[i].getName().equals(name) && mas_employee[i].getSurname().equals(surname)) {
-                count = i;
+                count = i; // array copy
                 break;
             }
         }
@@ -80,7 +76,7 @@ public class Department {
         return mas_post;
     }
 
-    public Employee[] getMasSortSalary() {
+    public Employee[] getMasSortSalary() { // проверка на null
         for (int i = 0; i < mas_employee.length; i++) {
             Employee buffer;
             for (int j = 0; j < mas_employee.length - i - 1; j++) {

@@ -5,7 +5,7 @@ public class Organization {
     Department[] mas_department;
 
     public Organization(String name_organization) {
-        this.name_organization = name_organization;
+        this(name_organization, new Department[0]);
     }
 
     public Organization(String name_organization, Department[] mas_department) {
@@ -15,7 +15,7 @@ public class Organization {
 
     public void addDepartment(Department department){
         for (int i = 0; i < mas_department.length; i++) {
-            if (mas_department[i].equals("")) {
+            if (mas_department[i] == null) {
                 mas_department[i] = department;
                 return;
             }
@@ -52,7 +52,7 @@ public class Organization {
                 return mas_department[i];
             }
         }
-        return mas_department[0]; // пока хз как красиво выйти, если имя не будет совпадать
+        return null; // пока хз как красиво выйти, если имя не будет совпадать
     }
 
     public Department[] getMas_department() {
@@ -79,7 +79,7 @@ public class Organization {
         return count;
     }
 
-    public Employee richMan() {
+    public Employee richMan() { // проверка null
         int count = 0;
         Employee rich = null;
         for (int i = 0; i < mas_department.length; i++) {
@@ -91,16 +91,16 @@ public class Organization {
         return rich;
     }
 
-    public Department employeeDepartment(String name, String surname) {
+    public Department employeeDepartment(String name, String surname) { // проверка null
         Employee[] find_employee;
         for (int i = 0; i < mas_department.length; i++) {
             find_employee = mas_department[i].getMas_employee();
-            for (int j = 0; j < find_employee.length ; j++) {
-                if (find_employee[j].getName().equals(name) && find_employee[j].getSurname().equals(surname)) {
+            for (Employee employee : find_employee) { // for each
+                if (employee.getName().equals(name) && employee.getSurname().equals(surname)) {
                     return mas_department[i];
                 }
             }
         }
-        return mas_department[0]; // также пока хз как норм выйти если проверка не прошла
+        return null; // также пока хз как норм выйти если проверка не прошла
     }
 }
