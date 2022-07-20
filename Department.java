@@ -7,19 +7,20 @@ public class Department {
 
     public Department(String name_department){
         this(name_department,8);
-    }
+    } // норм
 
     public Department(String name_department, int number){
         this(name_department, new Employee[number]);
-    }
+    } // норм
 
     public Department(String name_department, Employee[] mas_employee){
         this.name_department = name_department;
         this.mas_employee = mas_employee;
         this.num_employee = mas_employee.length;
-    }
+    } // норм
 
-    public void addEmployee(Employee employee){ // проверка employee на null
+    public void addEmployee(Employee employee){
+        if (employee == null) return;
         for (int i = 0; i < mas_employee.length; i++) {
             if (mas_employee[i] == null) {
                 mas_employee[i] = employee;
@@ -27,69 +28,78 @@ public class Department {
             }
         }
         Employee[] mas_employee_2 = new Employee[mas_employee.length * 2];
-        for (int i = 0; i < mas_employee.length; i++) { // передалать array copy
-            mas_employee_2[i] = mas_employee[i];
-        }
+        System.arraycopy(mas_employee, 0, mas_employee_2, 0, mas_employee.length);
         mas_employee_2[mas_employee.length] = employee;
         mas_employee = mas_employee_2;
-    }
+    } // норм
 
     public boolean kickEmployee(String name, String surname){
-        int count = -1;
         for (int i = 0; i < mas_employee.length; i++) {
+            if (mas_employee[i] == null) return false;
             if (mas_employee[i].getName().equals(name) && mas_employee[i].getSurname().equals(surname)) {
-                count = i; // array copy
+                System.arraycopy(mas_employee, i + 1, mas_employee, i, mas_employee.length - i - 1);
+                return true;
+            }
+        }
+        return false;
+    } // норм
+
+    public int getNum() {
+        int count = 0;
+        for (Employee employee : mas_employee) {
+            if (employee == null) return count;
+            count++;
+        }
+        return count;
+    } // норм
+
+    public Employee[] getMass() {
+        int count = mas_employee.length;
+        for (int i = 0; i < mas_employee.length; i++) {
+            if (mas_employee[i] == null) {
+                count = i;
                 break;
             }
         }
-        if (count == -1) return false;
-        else {
-            for (int i = count; i < mas_employee.length - 1; i++) {
-                mas_employee[i] = mas_employee[i + 1];
-            }
-            mas_employee[mas_employee.length - 1] = null;
-        }
-        return true;
-    }
-
-    public int getNum() {
-        return num_employee;
-    }
-
-    public Employee[] getMass() {
-        return mas_employee;
-    }
+        Employee[] mass = new Employee[count];
+        System.arraycopy(mas_employee, 0, mass, 0, count);
+        return mass;
+    } // норм
 
     public Employee[] getMasPost(String post){
+        Employee[] mass = getMass();
         int count = 0;
-        for (int i = 0; i < mas_employee.length; i++) {
-           if (mas_employee[i].getPost().equals(post)) {
-               count++;
-           }
+        for (Employee employee : mass) {
+            if (employee.getPost().equals(post)) {
+                count++;
+            }
         }
         Employee[] mas_post = new Employee[count];
-        for (int i = 0; i < mas_employee.length; i++) {
-            if (mas_employee[i].getPost().equals(post)) {
-                mas_post[i] = mas_employee[i];
+        int count1 = 0;
+        for (Employee employee : mass) {
+            if (employee.getPost().equals(post)) {
+                mas_post[count1] = employee;
+                count1++;
             }
         }
         return mas_post;
-    }
+    } // норм, но пока много кода
 
-    public Employee[] getMasSortSalary() { // проверка на null
-        for (int i = 0; i < mas_employee.length; i++) {
+    public Employee[] getMasSortSalary() {
+        Employee[] mass = getMass();
+        if (mass == null) return null;
+        for (int i = 0; i < mass.length; i++) {
             Employee buffer;
-            for (int j = 0; j < mas_employee.length - i - 1; j++) {
-                if (mas_employee[i].getSalary() < mas_employee[i + 1].getSalary()){
-                    buffer = mas_employee[i];
-                    mas_employee[i] = mas_employee[i + 1];
-                    mas_employee[i + 1] = buffer;
+            for (int j = 0; j < mass.length - i - 1; j++) {
+                if (mass[j].getSalary() < mass[j + 1].getSalary()){
+                    buffer = mass[j];
+                    mass[j] = mass[j + 1];
+                    mass[j + 1] = buffer;
                 }
-
             }
         }
-        return mas_employee;
-    }
+        return mass;
+    } // норм
 
     public String getName_department() {
         return name_department;
@@ -110,5 +120,12 @@ public class Department {
     }
     public void setNum_employee(int num_employee) {
         this.num_employee = num_employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "name_department='" + name_department + '\'' +
+                '}';
     }
 }

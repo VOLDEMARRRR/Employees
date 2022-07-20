@@ -1,19 +1,22 @@
 package humanResourses;
 
+import java.util.Arrays;
+
 public class Organization {
     String name_organization;
     Department[] mas_department;
 
     public Organization(String name_organization) {
-        this(name_organization, new Department[0]);
-    }
+        this(name_organization, new Department[1]);
+    } // норм
 
     public Organization(String name_organization, Department[] mas_department) {
         this.name_organization = name_organization;
         this.mas_department = mas_department;
-    }
+    }  // норм
 
     public void addDepartment(Department department){
+        if (department == null) return;
         for (int i = 0; i < mas_department.length; i++) {
             if (mas_department[i] == null) {
                 mas_department[i] = department;
@@ -21,12 +24,10 @@ public class Organization {
             }
         }
         Department[] mas_department_2 = new Department[mas_department.length * 2];
-        for (int i = 0; i < mas_department.length; i++) {
-            mas_department_2[i] = mas_department[i];
-        }
+        System.arraycopy(mas_department, 0, mas_department_2, 0, mas_department.length);
         mas_department_2[mas_department.length] = department;
         mas_department = mas_department_2;
-    }
+    } // не понятно че с нулем делать
 
     public boolean deleteDepartment(String name){
         int count = -1;
@@ -103,4 +104,5 @@ public class Organization {
         }
         return null; // также пока хз как норм выйти если проверка не прошла
     }
+
 }
