@@ -41,6 +41,7 @@ public class Main {
         System.out.println(Arrays.toString(economic.getMasSortSalary()));
         System.out.println((sport.kickEmployee("Lana", "Fay")));
         System.out.println((sport.kickEmployee("Lana", "Fay")));
+        System.out.println(Arrays.toString(sports));
         System.out.println(Arrays.toString(sport.getMass()));
         System.out.println(Arrays.toString(economic.getMass()));
 
@@ -49,5 +50,14 @@ public class Main {
         apple.addDepartment(economic);
         Department[] departs = apple.getMas_department();
         System.out.println(Arrays.toString(departs));
+        //System.out.println(apple.deleteDepartment(sport.getName_department()));
+        System.out.println(Arrays.toString(departs));
+        System.out.println(apple.choiceDepartment("economic"));
+        System.out.println(Arrays.toString(apple.getMas_department()));
+        System.out.println(apple.countDepartment());
+        System.out.println(apple.countEmployee());
+        System.out.println(apple.countEmployeePost("God of thunder"));
+        System.out.println(apple.richMan());
+        System.out.println(apple.employeeDepartment("klod", "Monet"));
     }
 }

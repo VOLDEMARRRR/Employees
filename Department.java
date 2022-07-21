@@ -38,11 +38,12 @@ public class Department {
             if (mas_employee[i] == null) return false;
             if (mas_employee[i].getName().equals(name) && mas_employee[i].getSurname().equals(surname)) {
                 System.arraycopy(mas_employee, i + 1, mas_employee, i, mas_employee.length - i - 1);
+                mas_employee[mas_employee.length - 1] = null; // строка для уаления если 2 обьекта
                 return true;
             }
         }
         return false;
-    } // норм
+    } // норм и на удивление работает с 1 элементом
 
     public int getNum() {
         int count = 0;

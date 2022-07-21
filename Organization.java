@@ -1,7 +1,5 @@
 package humanResourses;
 
-import java.util.Arrays;
-
 public class Organization {
     String name_organization;
     Department[] mas_department;
@@ -30,79 +28,81 @@ public class Organization {
     } // не понятно че с нулем делать
 
     public boolean deleteDepartment(String name){
-        int count = -1;
         for (int i = 0; i < mas_department.length; i++) {
+            if (mas_department[i] == null) return false;
             if (mas_department[i].getName_department().equals(name)) {
-                count = i;
-                break;
+                System.arraycopy(mas_department, i + 1, mas_department, i, mas_department.length - i - 1);
+                mas_department[mas_department.length - 1] = null; // строка для уаления если 2 обьекта
+                return true;
             }
         }
-        if (count == -1) return false;
-        else {
-            for (int i = count; i < mas_department.length - 1; i++) {
-                mas_department[i] = mas_department[i + 1];
-            }
-            mas_department[mas_department.length - 1] = null;
-        }
-        return true;
-    }
+        return false;
+    } // норм и на удивление работает с 1 элементом
 
     public Department choiceDepartment(String name) {
-        for (int i = 0; i < mas_department.length; i++) {
-            if (mas_department[i].getName_department().equals(name)) {
-                return mas_department[i];
+        for (Department department : mas_department) {
+            if (department.getName_department().equals(name)) {
+                return department;
             }
         }
-        return null; // пока хз как красиво выйти, если имя не будет совпадать
-    }
+        return null;
+    } // норм
 
     public Department[] getMas_department() {
         return mas_department;
-    }
+    } // норм
 
     public int countDepartment() {
-        return mas_department.length;
-    }
+        int count = 0;
+        for (Department department : mas_department) {
+            if (department == null) return count;
+            count++;
+        }
+        return count;
+    } // норм
 
     public int countEmployee() {
         int count = 0;
-        for (int i = 0; i < mas_department.length; i++) {
-            count += mas_department[i].getNum_employee();
+        for (Department department : mas_department) {
+            if (department == null) return count;
+            count += department.getNum();
         }
         return count;
-    }
+    } // норм
 
     public int countEmployeePost(String post) {
         int count = 0;
-        for (int i = 0; i < mas_department.length; i++) {
-            count += mas_department[i].getMasPost(post).length;
+        for (Department department : mas_department) {
+            if (department == null) return count;
+            count += department.getMasPost(post).length;
         }
         return count;
-    }
+    } // норм
 
-    public Employee richMan() { // проверка null
+    public Employee richMan() {
         int count = 0;
         Employee rich = null;
-        for (int i = 0; i < mas_department.length; i++) {
-            if (mas_department[i].getMasSortSalary()[0].getSalary() > count) {
-                count = mas_department[i].getMasSortSalary()[0].getSalary();
-                rich = mas_department[i].getMasSortSalary()[0];
+        for (Department department : mas_department) {
+            if (department == null) return rich;
+            if (department.getMasSortSalary()[0].getSalary() > count) {
+                count = department.getMasSortSalary()[0].getSalary();
+                rich = department.getMasSortSalary()[0];
             }
         }
         return rich;
-    }
+    } // норм
 
-    public Department employeeDepartment(String name, String surname) { // проверка null
+    public Department employeeDepartment(String name, String surname) {
         Employee[] find_employee;
-        for (int i = 0; i < mas_department.length; i++) {
-            find_employee = mas_department[i].getMas_employee();
-            for (Employee employee : find_employee) { // for each
+        for (Department department : mas_department) {
+            if (department == null) return null;
+            find_employee = department.getMass();
+            for (Employee employee : find_employee) {
                 if (employee.getName().equals(name) && employee.getSurname().equals(surname)) {
-                    return mas_department[i];
+                    return department;
                 }
             }
         }
-        return null; // также пока хз как норм выйти если проверка не прошла
-    }
-
+        return null;
+    } // норм
 }
