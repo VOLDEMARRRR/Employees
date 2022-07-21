@@ -20,6 +20,7 @@ public class Main {
 
         Department sport = new Department("sport", 1);
         Department economic = new Department("economic");
+        Department quality = new Department("quality");
         sport.addEmployee(Lana);
         sport.addEmployee(Obi);
         sport.addEmployee(Thor);
@@ -48,9 +49,10 @@ public class Main {
         Organization apple = new Organization("Apple");
         apple.addDepartment(sport);
         apple.addDepartment(economic);
+        apple.addDepartment(quality);
         Department[] departs = apple.getMas_department();
         System.out.println(Arrays.toString(departs));
-        //System.out.println(apple.deleteDepartment(sport.getName_department()));
+        System.out.println(apple.deleteDepartment(quality.getName_department()));
         System.out.println(Arrays.toString(departs));
         System.out.println(apple.choiceDepartment("economic"));
         System.out.println(Arrays.toString(apple.getMas_department()));
