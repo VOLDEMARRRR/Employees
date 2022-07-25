@@ -1,6 +1,8 @@
 package humanResourses;
 
-public class Employee {
+import java.util.Objects;
+
+public  class Employee {
     String name;
     String surname;
     String post;
@@ -51,4 +53,17 @@ public class Employee {
                 "name='" + name + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return salary == employee.salary && Objects.equals(name, employee.name) && Objects.equals(surname, employee.surname) && Objects.equals(post, employee.post);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode()^surname.hashCode()^post.hashCode()^salary;
+    }// почитать битовое искл или
 }

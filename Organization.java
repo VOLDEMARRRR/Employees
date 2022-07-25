@@ -5,7 +5,7 @@ public class Organization {
     Department[] mas_department;
 
     public Organization(String name_organization) {
-        this(name_organization, new Department[1]);
+        this(name_organization, new Department[0]);
     } // норм
 
     public Organization(String name_organization, Department[] mas_department) {
@@ -21,11 +21,11 @@ public class Organization {
                 return;
             }
         }
-        Department[] mas_department_2 = new Department[mas_department.length * 2];
+        Department[] mas_department_2 = new Department[mas_department.length * 2 + 1];
         System.arraycopy(mas_department, 0, mas_department_2, 0, mas_department.length);
         mas_department_2[mas_department.length] = department;
         mas_department = mas_department_2;
-    } // не понятно че с нулем делать
+    } // норм
 
     public boolean deleteDepartment(String name){
         for (int i = 0; i < mas_department.length; i++) {
@@ -37,7 +37,7 @@ public class Organization {
             }
         }
         return false;
-    } // норм и на удивление работает с 1 элементом
+    } // норм
 
     public Department choiceDepartment(String name) {
         for (Department department : mas_department) {
@@ -74,7 +74,10 @@ public class Organization {
         int count = 0;
         for (Department department : mas_department) {
             if (department == null) return count;
-            count += department.getMasPost(post).length;
+            for (Employee employee : department.mas_employee) {
+                if (employee == null) break;
+                if (employee.getPost().equals(post)) count++;
+            }
         }
         return count;
     } // норм
@@ -84,9 +87,12 @@ public class Organization {
         Employee rich = null;
         for (Department department : mas_department) {
             if (department == null) return rich;
-            if (department.getMasSortSalary()[0].getSalary() > count) {
-                count = department.getMasSortSalary()[0].getSalary();
-                rich = department.getMasSortSalary()[0];
+            for (Employee employee : department.mas_employee) {
+                if (employee == null) break;
+                if (employee.getSalary() > count) {
+                    count = employee.getSalary();
+                    rich = employee;
+                }
             }
         }
         return rich;
@@ -96,8 +102,9 @@ public class Organization {
         Employee[] find_employee;
         for (Department department : mas_department) {
             if (department == null) return null;
-            find_employee = department.getMass();
+            find_employee = department.getMas_employee();
             for (Employee employee : find_employee) {
+                if (employee == null) break;
                 if (employee.getName().equals(name) && employee.getSurname().equals(surname)) {
                     return department;
                 }

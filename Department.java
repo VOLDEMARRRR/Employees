@@ -43,7 +43,7 @@ public class Department {
             }
         }
         return false;
-    } // норм и на удивление работает с 1 элементом
+    } // норм
 
     public int getNum() {
         int count = 0;
@@ -68,9 +68,10 @@ public class Department {
     } // норм
 
     public Employee[] getMasPost(String post){
-        Employee[] mass = getMass();
+        Employee[] mass = getMas_employee();
         int count = 0;
         for (Employee employee : mass) {
+            if (employee == null) break;
             if (employee.getPost().equals(post)) {
                 count++;
             }
@@ -78,20 +79,22 @@ public class Department {
         Employee[] mas_post = new Employee[count];
         int count1 = 0;
         for (Employee employee : mass) {
+            if (employee == null) break;
             if (employee.getPost().equals(post)) {
                 mas_post[count1] = employee;
                 count1++;
             }
         }
         return mas_post;
-    } // норм, но пока много кода
+    } // норм
 
     public Employee[] getMasSortSalary() {
-        Employee[] mass = getMass();
+        Employee[] mass = getMas_employee();
         if (mass == null) return null;
         for (int i = 0; i < mass.length; i++) {
             Employee buffer;
             for (int j = 0; j < mass.length - i - 1; j++) {
+                if (mass[j + 1] == null) break;
                 if (mass[j].getSalary() < mass[j + 1].getSalary()){
                     buffer = mass[j];
                     mass[j] = mass[j + 1];

@@ -58,8 +58,9 @@ public class Main {
         System.out.println(Arrays.toString(apple.getMas_department()));
         System.out.println(apple.countDepartment());
         System.out.println(apple.countEmployee());
-        System.out.println(apple.countEmployeePost("God of thunder"));
+        System.out.println(apple.countEmployeePost("economist"));
         System.out.println(apple.richMan());
         System.out.println(apple.employeeDepartment("klod", "Monet"));
+
     }
 }
